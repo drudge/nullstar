@@ -39,6 +39,8 @@ RUN adduser --disabled-login --gecos 'voidptr' nullstar
 # Install GitLab
 RUN cd /home/nullstar;\
   su git -c "git clone https://lab.weborate.com/drudge/nullstar.git -b deploy ."
+  
+ADD ./config.json /home/nullstar/config.json
 
 WORKDIR /home/nullstar
 
