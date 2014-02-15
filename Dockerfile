@@ -40,6 +40,9 @@ RUN adduser --disabled-login --gecos 'Node' node
 RUN cd /home/node;\
   su node -c "git clone https://lab.weborate.com/drudge/nullstar.git -b deploy nullstar"
   
+RUN cd /home/node/nullstar;\
+  su node -c "npm install --production"
+  
 ADD ./config.json /home/node/config.json
 
 WORKDIR /home/node/nullstar
