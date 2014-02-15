@@ -34,14 +34,14 @@ RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise main universe multive
 RUN apt-get -y install nodejs git
 
 # Create Node user
-RUN adduser --disabled-login --gecos 'voidptr' nullstar
+RUN adduser --disabled-login --gecos 'Node' node
 
 # Install GitLab
-RUN cd /home/nullstar;\
-  su nullstar -c "git clone https://lab.weborate.com/drudge/nullstar.git -b deploy ."
+RUN cd /home/node;\
+  su node -c "git clone https://lab.weborate.com/drudge/nullstar.git -b deploy nullstar"
   
-ADD ./config.json /home/nullstar/config.json
+ADD ./config.json /home/node/config.json
 
-WORKDIR /home/nullstar
+WORKDIR /home/node/nullstar
 
-CMD ["/bin/su", "nullstar", "-c", "node app.js"]
+CMD ["/bin/su", "node", "-c", "node app.js"]
