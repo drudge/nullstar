@@ -4,11 +4,15 @@
  * MIT Licensed
  */
 
-var NullstarBot = require('./lib/nullstar_bot');
+/**
+ * Module dependencies.
+ */
 
-var bot = new NullstarBot();
+var NullstarBot = require('./lib/nullstar_bot');
 var config = require('./config.json');
 
-bot
-  .set(config)
-  .connect();
+var bot = new NullstarBot().set(config).connect();
+
+process.on('SIGTERM', function() {
+  bot.disconnect('bye - https://twitter.com/' + config['twitter username']);
+});
