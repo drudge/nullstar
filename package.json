@@ -1,0 +1,22 @@
+{
+  "name": "nullstar",
+  "version": "0.1.0",
+  "description": "voidptr tweet bot",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "voidptr",
+    "irc",
+    "bot",
+    "tweet"
+  ],
+  "author": "Nicholas Penree <nick@penree.com>",
+  "license": "MIT",
+  "dependencies": {
+    "twitter": "~0.2.5",
+    "debug": "~0.7.4",
+    "irc": "~0.3.6"
+  }
+}
