@@ -38,10 +38,10 @@ RUN adduser --disabled-login --gecos 'voidptr' nullstar
 
 # Install GitLab
 RUN cd /home/nullstar;\
-  su git -c "git clone https://lab.weborate.com/drudge/nullstar.git -b deploy ."
+  su nullstar -c "git clone https://lab.weborate.com/drudge/nullstar.git -b deploy ."
   
 ADD ./config.json /home/nullstar/config.json
 
 WORKDIR /home/nullstar
 
-CMD ["/bin/su", "node", "-c", "node app.js"]
+CMD ["/bin/su", "nullstar", "-c", "node app.js"]
