@@ -33,16 +33,18 @@ RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise main universe multive
 # Install Node.js, MongoDB, and git
 RUN apt-get -y install nodejs git
 
+run npm install -g repl-client
+
 # Create Node user
 RUN adduser --disabled-login --gecos 'Node' node
 
 # Install GitLab
 RUN cd /home/node;\
   su node -c "git clone https://lab.weborate.com/drudge/nullstar.git -b deploy nullstar"
-  
+
 RUN cd /home/node/nullstar;\
   su node -c "npm install"
-  
+
 ADD ./config.json /home/node/nullstar/config.json
 
 WORKDIR /home/node/nullstar
