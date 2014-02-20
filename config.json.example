@@ -1,15 +1,19 @@
 {
   "trigger": "!",
-  
+
   "twitter consumer key": "",
   "twitter consumer secret": "",
   "twitter access token": "",
   "twitter access token secret": "",
-  
+
   "irc server": "chat.freenode.net",
   "irc port": 7000,
   "irc use ssl": true,
   "irc use sasl": true,
+  "irc enable autorejoin": true,
+  "irc enable flood protection": true,
+  "irc flood protection delay": 1000,
+  "irc connect attempts": 5,
   "irc nick": "nullstar",
   "irc name": "nullstar",
   "irc username": "nullstar",
