@@ -16,8 +16,7 @@ var bot = new Bot();
 // setup the bot
 bot
   .set(config)
-  .plugin('uptime')
-  .plugin('tweet')
+  .plugin('*')
   .connect();
 
 // setup a repl for fun and profit
