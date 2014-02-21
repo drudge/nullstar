@@ -2,18 +2,18 @@
 
 var net = require("net");
 var inspect = require("util").inspect;
-var debug = require('debug')('ircd');
+var debugLog = require('debug')('ircd');
 
 var port = 6667;
 var serverName = "localhost";
 var debugLevel = 10;
 
 function debug (m) {
-  if (debugLevel > 0) debug(m);
+  if (debugLevel > 0) debugLog(m);
 }
 
 function debugObj (m) {
-  if (debugLevel > 0) debug(inspect(m));
+  if (debugLevel > 0) debugLog(inspect(m));
 }
 
 function simpleString (s) {
@@ -183,14 +183,14 @@ function normalizeChannelName (channelName) {
 // User
 
 function User (socket) {
-    debug("User " + socket);
+  debug("User " + socket);
   this.socket = socket;
   this.channels = [];
   this.registered = false;
   this.nick = null;
   this.names = {};
   this.names = { user: "x"
-               , host: "x"
+               , host: socket.remoteAddress
                , server: "x"
                , real: "x"
                };
@@ -245,6 +245,9 @@ User.prototype.join = function (channelName) {
 function maybeRegister (user) {
   if (user.nick && user.names && !user.registered) {
     user.sendMessage("001 " + user.nick + " :Welcome to " + serverName);
+    user.sendMessage("375 " + user.nick + " :Start of /MOTD command.");
+    user.sendMessage("372 " + user.nick + " No message set");
+    user.sendMessage("376 " + user.nick + " :End of /MOTD command.");
     user.registered = true;
   }
 }
@@ -361,11 +364,11 @@ User.prototype.parse = function (message) {
       break;
 
     case "USER":
-      match = /^([^\s]+)\s+([^\s]+)\s+([^\s]+)(\s+:(.*))?$/.exec(rest);
+      match = /^([^\s]+)\s+([^\s]+)\s+([^\s]+)(\s+:?(.*))?$/.exec(rest);
       if (!match) return;
       this.names = { user: simpleString(match[1])
-                   , host: simpleString(match[2])
-                   , server: simpleString(match[3])
+                   , host: this.socket.remoteAddress
+                   , server: serverName
                    , real: simpleString(match[5])
                    };
       debug("Got USER: ");
@@ -474,7 +477,7 @@ server = net.createServer(function (socket) {
   // (We're adding on having a high-level "catch all uncaught exceptions"
   // feature soon, which would also solve this proble.)
 
-  socket.addListener("data", function (packet) {
+  socket.on("data", function (packet) {
     try {
       buffer += packet;
       var i;
@@ -493,7 +496,7 @@ server = net.createServer(function (socket) {
     }
   });
 
-  socket.addListener("end", function (packet) {
+  socket.on("end", function (packet) {
     try {
       user.quit("connection reset by peer");
     } catch (e) {
@@ -501,7 +504,7 @@ server = net.createServer(function (socket) {
     }
   });
 
-  socket.addListener("timeout", function (packet) {
+  socket.on("timeout", function (packet) {
     try {
      // user.quit("idle timeout");
      user.sendMessage("PING :" + serverName);
