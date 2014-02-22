@@ -30,9 +30,11 @@ replify({
 
 // gracefully exit
 process.on('SIGTERM', function() {
-  bot.disconnect('bye - https://twitter.com/' + config['twitter username'], function() {
-    setTimeout(function() {
-      process.exit();
-    }, 2000);
+  bot.db.close(function() {
+    bot.disconnect('bye - https://twitter.com/' + config['twitter username'], function() {
+      setTimeout(function() {
+        process.exit();
+      }, 2000);
+    });
   });
 });

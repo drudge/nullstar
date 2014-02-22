@@ -33,7 +33,7 @@ RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise main universe multive
 # Install Node.js, MongoDB, and git
 RUN apt-get -y install nodejs git
 
-run npm install -g repl-client
+run npm install -g repl-client forever
 
 # Create Node user
 RUN adduser --disabled-login --gecos 'Node' node
@@ -49,4 +49,4 @@ ADD ./config.json /home/node/nullstar/config.json
 
 WORKDIR /home/node/nullstar
 
-CMD ["/bin/su", "node", "-c", "node app.js"]
+CMD ["/bin/su", "node", "-c", "forever --sourceDir /home/node/nullstar --minUptime 2000 --spinSleepTime 4000 --killSignal=SIGTERM -f start node app.js"]
