@@ -30,18 +30,20 @@ RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise main universe multive
   apt-get update;\
   apt-get -y upgrade
 
-# Install Node.js, MongoDB, and git
+# Install system packages
 RUN apt-get -y install nodejs git
 
-run npm install -g repl-client forever
+# Install node packages
+RUN npm install -g repl-client forever
 
 # Create Node user
 RUN adduser --disabled-login --gecos 'Node' node
 
-# Install GitLab
+# Clone app repo
 RUN cd /home/node;\
   su node -c "git clone https://lab.weborate.com/drudge/nullstar.git -b deploy nullstar"
 
+# Install app dependencies
 RUN cd /home/node/nullstar;\
   su node -c "npm install"
 
@@ -49,4 +51,4 @@ ADD ./config.json /home/node/nullstar/config.json
 
 WORKDIR /home/node/nullstar
 
-CMD ["/bin/su", "node", "-c", "forever --sourceDir /home/node/nullstar --minUptime 2000 --spinSleepTime 4000 --killSignal=SIGTERM -f start node app.js"]
+CMD ["/bin/su", "node", "-c", "forever --sourceDir /home/node/nullstar --minUptime 2000 --spinSleepTime 4000 --killSignal=SIGTERM -f start app.js"]
