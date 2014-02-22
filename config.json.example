@@ -1,11 +1,13 @@
 {
   "trigger": "!",
-
+  
+  "database path": "./nullstar.db",
+  
   "twitter consumer key": "",
   "twitter consumer secret": "",
   "twitter access token": "",
   "twitter access token secret": "",
-
+  
   "irc server": "chat.freenode.net",
   "irc port": 7000,
   "irc use ssl": true,

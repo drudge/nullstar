@@ -11,21 +11,20 @@
 var replify = require('replify');
 var Bot = require('./lib/bot');
 var config = require(process.env.CONFIG || './config.json');
-var bot = new Bot();
+var bot = new Bot(config);
 
 // setup the bot
 bot
-  .set(config)
   .plugin('*')
   .connect();
 
 // setup a repl for fun and profit
 replify({
   name: 'nullstar',
-  app: bot,
   contexts: {
     bot: bot,
-    irc: bot.connection
+    irc: bot.connection,
+    plugins: bot.plugins
   }
 });
 
