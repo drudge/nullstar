@@ -51,4 +51,4 @@ ADD ./config.json /home/node/nullstar/config.json
 
 WORKDIR /home/node/nullstar
 
-CMD ["/bin/su", "node", "-c", "forever --sourceDir /home/node/nullstar --minUptime 2000 --spinSleepTime 4000 --killSignal=SIGTERM -f start app.js"]
+CMD ["/bin/su", "node", "-c", "forever --sourceDir /home/node/nullstar --minUptime 2000 --spinSleepTime 4000 --killSignal=SIGTERM -f start index.js"]
