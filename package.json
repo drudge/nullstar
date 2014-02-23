@@ -1,24 +1,37 @@
 {
   "name": "nullstar",
-  "version": "0.1.0",
-  "description": "voidptr tweet bot",
-  "main": "app.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "version": "0.9.0",
+  "author": "Nicholas Penree <nick@penree.com>",
+  "description": "Minimal and flexible IRC bot and framework",
+  "license": "MIT",
+  
   "keywords": [
     "voidptr",
     "irc",
     "bot",
-    "tweet"
+    "plugins",
+    "internet",
+    "relay",
+    "chat",
+    "tweet",
+    "uptime",
+    "karma"
   ],
-  "author": "Nicholas Penree <nick@penree.com>",
-  "license": "MIT",
+  
+  "main": "index.js",
+  
+  "scripts": {
+    "start": "node index.js",
+    "debug": "DEBUG=* CONFIG=./config.dev.json node index.js",
+    "ircd": "./ircd",
+    "test": "echo \"Error: tests not implemented yet\" && exit 1"
+  },
+  
   "dependencies": {
-    "twitter": "~0.2.5",
-    "debug": "~0.7.4",
-    "irc": "~0.3.6",
-    "replify": "~1.1.4",
-    "sqlite3": "~2.2.0"
+    "twitter": "^0.2.5",
+    "debug": "^0.7.4",
+    "irc": "^0.3.6",
+    "replify": "^1.1.4",
+    "sqlite3": "^2.2.0"
   }
 }

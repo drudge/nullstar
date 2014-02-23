@@ -58,11 +58,12 @@ Channel.prototype.broadcast = function (msg, from) {
 
 Channel.prototype.quit = function (user, msg) {
   for (var i = 0; i < this.users.length; i++) {
+    var tmp = this.users[i];
     if (this.users[i] == user) {
       this.users.splice(i, 1);
     }
   }
-  this.broadcast("QUIT :" + (msg || "quit"), user);
+  this.broadcast("QUIT :" + (msg || "quit"), tmp);
 };
 
 Channel.prototype.privmsg = function (msg, user) {
@@ -468,15 +469,10 @@ server = net.createServer(function (socket) {
   //socket.setTimeout(2 * 60 * 1000); // 2 minute idle timeout
   socket.setEncoding("utf8");
   debug("Connection " + socket.remoteAddress);
-
+  
   var user = new User(socket);
   var buffer = "";
-
-  // note all these try-catches are just to avoid the server crashing during
-  // the demo. in real-life you would want to test away these problems.
-  // (We're adding on having a high-level "catch all uncaught exceptions"
-  // feature soon, which would also solve this proble.)
-
+  
   socket.on("data", function (packet) {
     try {
       buffer += packet;
