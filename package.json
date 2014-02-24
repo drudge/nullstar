@@ -4,7 +4,6 @@
   "author": "Nicholas Penree <nick@penree.com>",
   "description": "Minimal and flexible IRC bot and framework",
   "license": "MIT",
-  
   "keywords": [
     "voidptr",
     "irc",
@@ -17,21 +16,21 @@
     "uptime",
     "karma"
   ],
-  
   "main": "index.js",
-  
   "scripts": {
     "start": "node index.js",
     "debug": "DEBUG=* CONFIG=./config.dev.json node index.js",
     "ircd": "./ircd",
     "test": "echo \"Error: tests not implemented yet\" && exit 1"
   },
-  
   "dependencies": {
     "twitter": "^0.2.5",
     "debug": "^0.7.4",
     "irc": "^0.3.6",
     "replify": "^1.1.4",
-    "sqlite3": "^2.2.0"
+    "sqlite3": "^2.2.0",
+    "ms": "^0.6.2",
+    "bytes": "^0.2.1",
+    "timeago": "~0.1.0"
   }
 }
