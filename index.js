@@ -41,7 +41,7 @@ if (!module.parent) {
   // gracefully exit
   process.on('SIGTERM', function() {
     bot.storage.close(function() {
-      bot.disconnect('bye - https://twitter.com/' + config['twitter username'], function() {
+      bot.disconnect('https://twitter.com/' + bot.get('twitter username', 'nullstar'), function() {
         setTimeout(function() {
           process.exit();
         }, 2000);
