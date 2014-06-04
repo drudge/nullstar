@@ -8,7 +8,12 @@
   "twitter access token": "",
   "twitter access token secret": "",
   "twitter notice tweets": true,
+  "twitter allowed channels": [],
   
+  "linklog capture links": true,
+  "linklog post url": "",
+  "linklog post token": "",
+
   "irc server": "chat.freenode.net",
   "irc port": 7000,
   
