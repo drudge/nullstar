@@ -34,7 +34,6 @@
     "sqlite3": "^2.2.0",
     "timeago": "~0.1.0",
     "twitter": "^0.2.5",
-    "weatherapi": "0.0.8",
-    "xml2js": "^0.4.4"
+    "weatherapi": "0.0.8"
   }
 }
