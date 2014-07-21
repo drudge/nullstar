@@ -13,6 +13,8 @@
   "linklog capture links": true,
   "linklog post url": "",
   "linklog post token": "",
+  
+  "weather api key": "",
 
   "irc server": "chat.freenode.net",
   "irc port": 7000,
