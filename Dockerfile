@@ -62,4 +62,4 @@ ADD ./config.json /home/node/nullstar/config.json
 
 WORKDIR /home/node/nullstar
 
-CMD ["/usr/bin/pm2", "start", "app.json"]
+CMD ["pm2", "start", "app.json"]

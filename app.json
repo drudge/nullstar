@@ -9,8 +9,11 @@
   "pid_file": "/srv/nullstar/nullstar.pid",
   "max_restarts": 10,
   "watch": false,
+  "instances": "max",
+  "no_daemon": true,
+  "merge_logs": true,
   "exec_interpreter": "node",
-  "exec_mode": "fork",
+  "exec_mode": "cluster",
   "env": {
     "NODE_ENV": "production"
   }
