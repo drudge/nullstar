@@ -39,14 +39,18 @@ RUN npm install -g repl-client forever
 # Create Node user
 RUN adduser --disabled-login --gecos 'Node' node
 
+# Place our private key in the proper place
+ADD ./deploy.key /home/node/.ssh/id_rsa
+
 # Clone app repo
 RUN cd /home/node;\
-  su node -c "git clone https://lab.weborate.com/drudge/nullstar.git -b deploy nullstar"
+  su node -c "git clone git@lab.weborate.com:drudge/nullstar.git -b deploy nullstar"
 
 # Install app dependencies
 RUN cd /home/node/nullstar;\
   su node -c "npm install"
 
+# Add our config to the container
 ADD ./config.json /home/node/nullstar/config.json
 
 WORKDIR /home/node/nullstar
