@@ -20,12 +20,12 @@ var Storage = require('./lib/storage');
 if (!module.parent) {
   var config = require(process.env.CONFIG || './config.json');
   var bot = new Bot(config);
-  
+
   // setup the bot
   bot
     .plugin('*')
     .connect();
-  
+
   // setup a repl for fun and profit
   replify({
     name: 'nullstar',
@@ -37,7 +37,7 @@ if (!module.parent) {
       db: bot.storage
     }
   });
-  
+
   // gracefully exit
   process.on('SIGTERM', function() {
     bot.storage.close(function() {

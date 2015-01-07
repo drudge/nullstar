@@ -7,15 +7,22 @@
 FROM ubuntu:12.04
 MAINTAINER Nicholas Penree <nick@penree.com>
 
+ENV NULLSTAR_GIT_DOMAIN lab.weborate.com
+ENV NULLSTAR_GIT_URL git@$NULLSTAR_GIT_DOMAIN:drudge/nullstar.git
+
+# Prepare the system
+
 ENV DEBIAN_FRONTEND noninteractive
 
-# Fix upstart
+USER root
+
+## Fix upstart
 RUN dpkg-divert --local --rename --add /sbin/initctl && ln -s /bin/true /sbin/initctl
 
-# Fix locales
+## Fix locales
 RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
 
-# Fix timezone
+## Fix timezone
 RUN echo "America/New_York" > /etc/timezone && dpkg-reconfigure tzdata
 
 # Run upgrades
@@ -33,31 +40,39 @@ RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise main universe multive
   apt-get update;\
   apt-get -y upgrade
 
-# Install system packages
+## Install system packages
 RUN apt-get -y install nodejs git
 
-# Install node packages
+## Install node packages
 RUN npm install -g repl-client pm2
 
-# Create Node user
+## Create Node user
 RUN adduser --disabled-login --gecos 'Node' node
 
-# Place our private key in the proper place
+ENV HOME /home/node
 
-USER node
-
+## Place our private key in the proper place
 ADD deploy.key /home/node/.ssh/id_rsa
-RUN ssh-keyscan -t rsa lab.weborate.com 2>&1 >> /home/node/.ssh/known_hosts;
-
-WORKDIR /home/node/nullstar
+RUN chown -R node:node /home/node/.ssh
 
 # Clone app repo
-RUN git clone git@lab.weborate.com:drudge/nullstar.git -b deploy nullstar
+USER node
+RUN ssh-keyscan -t rsa $NULLSTAR_GIT_DOMAIN 2>&1 >> /home/node/.ssh/known_hosts;
+RUN git clone $NULLSTAR_GIT_URL -b deploy /home/node/nullstar
 
-# Install app dependencies
-RUN npm install
+# Setup app, install dependencies, etc.
+USER node
+WORKDIR /home/node/nullstar
+RUN npm install --production
 
 # Add our config to the container
+USER root
 ADD config.json /home/node/nullstar/config.json
+RUN chown node:node /home/node/nullstar/config.json
 
+VOLUME /home/node/nullstar/logs
+VOLUME /home/node/nullstar/repl
+
+# Start the app
+USER node
 CMD ["pm2", "--no-daemon", "start", "app.json"]
