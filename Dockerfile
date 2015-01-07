@@ -71,7 +71,7 @@ ADD config.json /home/node/nullstar/config.json
 RUN chown node:node /home/node/nullstar/config.json
 
 VOLUME /home/node/nullstar/logs
-VOLUME /home/node/nullstar/repl
+VOLUME /home/node/nullstar/data
 
 # Start the app
 USER node
