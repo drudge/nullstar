@@ -43,23 +43,21 @@ RUN npm install -g repl-client pm2
 RUN adduser --disabled-login --gecos 'Node' node
 
 # Place our private key in the proper place
-ADD ./deploy.key /home/node/.ssh/id_rsa
-RUN echo 'IdentityFile ~/.ssh/id_rsa' >> /etc/ssh/ssh_config;\
-    echo "Host lab.weborate.com\n\tStrictHostKeyChecking no\n" >> /home/node/.ssh/config;\
-    ssh-keyscan -t rsa lab.weborate.com 2>&1 >> /home/node/.ssh/known_hosts;\
-    chown -R node:node /home/node/.ssh
 
-# Clone app repo
-RUN cd /home/node;\
-  su node -c "git clone git@lab.weborate.com:drudge/nullstar.git -b deploy nullstar"
+USER node
 
-# Install app dependencies
-RUN cd /home/node/nullstar;\
-  su node -c "npm install"
-
-# Add our config to the container
-ADD ./config.json /home/node/nullstar/config.json
+ADD deploy.key /home/node/.ssh/id_rsa
+RUN ssh-keyscan -t rsa lab.weborate.com 2>&1 >> /home/node/.ssh/known_hosts;
 
 WORKDIR /home/node/nullstar
 
-CMD ["pm2", "start", "app.json"]
+# Clone app repo
+RUN git clone git@lab.weborate.com:drudge/nullstar.git -b deploy nullstar
+
+# Install app dependencies
+RUN npm install
+
+# Add our config to the container
+ADD config.json /home/node/nullstar/config.json
+
+CMD ["pm2", "--no-daemon", "start", "app.json"]
