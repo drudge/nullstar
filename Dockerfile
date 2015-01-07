@@ -47,7 +47,7 @@ ADD ./deploy.key /home/node/.ssh/id_rsa
 RUN echo 'IdentityFile ~/.ssh/id_rsa' >> /etc/ssh/ssh_config;\
     echo "Host lab.weborate.com\n\tStrictHostKeyChecking no\n" >> /home/node/.ssh/config;\
     ssh-keyscan -t rsa lab.weborate.com 2>&1 >> /home/node/.ssh/known_hosts;\
-    chown -R node:node /home/node/.ssh/
+    chown -R node:node /home/node/.ssh
 
 # Clone app repo
 RUN cd /home/node;\
@@ -62,4 +62,4 @@ ADD ./config.json /home/node/nullstar/config.json
 
 WORKDIR /home/node/nullstar
 
-CMD ["/usr/local/bin/pm2", "start", "app.json"]
+CMD ["/usr/bin/pm2", "start", "app.json"]
