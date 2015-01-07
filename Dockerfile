@@ -9,6 +9,9 @@ MAINTAINER Nicholas Penree <nick@penree.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 
+# Fix upstart
+RUN dpkg-divert --local --rename --add /sbin/initctl && ln -s /bin/true /sbin/initctl
+
 # Fix locales
 RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
 
@@ -34,13 +37,17 @@ RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise main universe multive
 RUN apt-get -y install nodejs git
 
 # Install node packages
-RUN npm install -g repl-client forever
+RUN npm install -g repl-client pm2
 
 # Create Node user
 RUN adduser --disabled-login --gecos 'Node' node
 
 # Place our private key in the proper place
 ADD ./deploy.key /home/node/.ssh/id_rsa
+RUN echo 'IdentityFile ~/.ssh/id_rsa' >> /etc/ssh/ssh_config;\
+    echo "Host lab.weborate.com\n\tStrictHostKeyChecking no\n" >> /home/node/.ssh/config;\
+    ssh-keyscan -t rsa lab.weborate.com 2>&1 >> /home/node/.ssh/known_hosts;\
+    chown -R node:node /home/node/.ssh/
 
 # Clone app repo
 RUN cd /home/node;\
@@ -55,4 +62,4 @@ ADD ./config.json /home/node/nullstar/config.json
 
 WORKDIR /home/node/nullstar
 
-CMD ["/bin/su", "node", "-c", "forever --sourceDir /home/node/nullstar --minUptime 2000 --spinSleepTime 4000 --killSignal=SIGTERM -f start index.js"]
+CMD ["/usr/local/bin/pm2", "start", "app.json"]
