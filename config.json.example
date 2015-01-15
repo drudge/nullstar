@@ -1,24 +1,27 @@
 {
   "trigger": "!",
-  
+
   "database path": "./nullstar.db",
-  
+
   "twitter consumer key": "",
   "twitter consumer secret": "",
   "twitter access token": "",
   "twitter access token secret": "",
   "twitter notice tweets": true,
   "twitter allowed channels": [],
-  
+
+  "vine notice vines": true,
+  "vine allowed channels": [],
+
   "linklog capture links": true,
   "linklog post url": "",
   "linklog post token": "",
-  
+
   "weather api key": "",
 
   "irc server": "chat.freenode.net",
   "irc port": 7000,
-  
+
   "irc use ssl": true,
   "irc ssl accept self signed certs": false,
   "irc ssl accept expired certs": false,
