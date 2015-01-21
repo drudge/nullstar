@@ -13,6 +13,9 @@
   "vine notice vines": true,
   "vine allowed channels": [],
 
+  "instagram notice grams": true,
+  "instagram allowed channels": [],
+
   "linklog capture links": true,
   "linklog post url": "",
   "linklog post token": "",
