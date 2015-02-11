@@ -1,6 +1,6 @@
 {
   "name": "nullstar",
-  "version": "0.9.5",
+  "version": "0.9.6",
   "author": "Nicholas Penree <nick@penree.com>",
   "description": "Minimal and flexible IRC bot and framework",
   "license": "MIT",
