@@ -20,6 +20,10 @@
   "linklog post url": "",
   "linklog post token": "",
 
+  "slack enabled": true,
+  "slack token": "",
+  "slack allowed channels": [],
+
   "weather api key": "",
 
   "irc server": "chat.freenode.net",
