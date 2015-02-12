@@ -29,6 +29,7 @@
   "irc server": "chat.freenode.net",
   "irc port": 7000,
 
+  "irc enabled": true,
   "irc use ssl": true,
   "irc ssl accept self signed certs": false,
   "irc ssl accept expired certs": false,

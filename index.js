@@ -22,9 +22,12 @@ if (!module.parent) {
   var bot = new Bot(config);
 
   // setup the bot
-  bot
-    .plugin('*')
-    .connect();
+  bot.plugin('*');
+
+  if (bot.get('irc enabled', true)) bot.transport('irc');
+  if (bot.get('slack enabled', true)) bot.transport('slack');
+
+  bot.connect();
 
   // setup a repl for fun and profit
   replify({
@@ -32,8 +35,10 @@ if (!module.parent) {
     contexts: {
       bot: bot,
       plugins: bot.plugins,
+      transports: bot.transports,
       storage: bot.storage,
-      irc: bot.connection,
+      irc: bot.transports.irc,
+      slack: bot.transports.slack,
       db: bot.storage
     }
   });
