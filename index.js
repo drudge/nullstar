@@ -12,6 +12,7 @@ var replify = require('replify');
 var Bot = require('./lib/bot');
 var Plugin = require('./lib/plugin');
 var Storage = require('./lib/storage');
+var Transport = require('./lib/transport');
 
 /**
  * If we weren't required, start an instance of a nullstar bot.
@@ -72,3 +73,9 @@ exports.Plugin = Plugin;
  */
 
 exports.Storage = Storage;
+
+/**
+ * Expose `Transport`.
+ */
+
+exports.Transport = Transport;
