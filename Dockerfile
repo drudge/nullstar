@@ -4,7 +4,7 @@
 # MIT Licensed
 #
 
-FROM ubuntu:12.04
+FROM ubuntu:trusty
 MAINTAINER Nicholas Penree <nick@penree.com>
 
 ENV NULLSTAR_GIT_DOMAIN lab.weborate.com
@@ -16,9 +16,6 @@ ENV DEBIAN_FRONTEND noninteractive
 
 USER root
 
-## Fix upstart
-RUN dpkg-divert --local --rename --add /sbin/initctl && ln -s /bin/true /sbin/initctl
-
 ## Fix locales
 RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
 
@@ -26,11 +23,11 @@ RUN locale-gen en_US.UTF-8 && dpkg-reconfigure locales
 RUN echo "America/New_York" > /etc/timezone && dpkg-reconfigure tzdata
 
 # Run upgrades
-RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise main universe multiverse' > /etc/apt/sources.list;\
-  echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise-updates main restricted universe' >> /etc/apt/sources.list;\
-  echo 'deb http://security.ubuntu.com/ubuntu precise-security main restricted universe' >> /etc/apt/sources.list;\
-  echo 'deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu precise main' > /etc/apt/sources.list.d/nodejs.list;\
-  echo 'deb http://ppa.launchpad.net/git-core/ppa/ubuntu precise main' > /etc/apt/sources.list.d/git.list;\
+RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise trusty multiverse' >> /etc/apt/sources.list;\
+  echo 'deb http://us.archive.ubuntu.com/ubuntu/ trusty-updates main restricted universe' >> /etc/apt/sources.list;\
+  echo 'deb http://security.ubuntu.com/ubuntu trusty-security main restricted universe' >> /etc/apt/sources.list;\
+  echo 'deb http://ppa.launchpad.net/chris-lea/node.js/ubuntu trusty main' > /etc/apt/sources.list.d/nodejs.list;\
+  echo 'deb http://ppa.launchpad.net/git-core/ppa/ubuntu trusty main' > /etc/apt/sources.list.d/git.list;\
   echo udev hold | dpkg --set-selections;\
   echo initscripts hold | dpkg --set-selections;\
   echo upstart hold | dpkg --set-selections;\
@@ -41,10 +38,10 @@ RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise main universe multive
   apt-get -y upgrade
 
 ## Install system packages
-RUN apt-get -y install nodejs git libxml2-dev
+RUN apt-get -y install nodejs git python build-essential libxml2-dev
 
 ## Install node packages
-RUN npm install -g repl-client pm2
+RUN npm install -g node-gyp repl-client pm2
 
 ## Create Node user
 RUN adduser --disabled-login --gecos 'Node' node
