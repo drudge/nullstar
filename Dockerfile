@@ -41,7 +41,7 @@ RUN echo 'deb http://us.archive.ubuntu.com/ubuntu/ precise main universe multive
   apt-get -y upgrade
 
 ## Install system packages
-RUN apt-get -y install nodejs git
+RUN apt-get -y install nodejs git libxml2-dev
 
 ## Install node packages
 RUN npm install -g repl-client pm2

@@ -26,6 +26,8 @@
 
   "weather api key": "",
 
+  "wolfram alpha app id": "",
+
   "irc server": "chat.freenode.net",
   "irc port": 7000,
 
